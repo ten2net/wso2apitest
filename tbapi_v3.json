@@ -1,0 +1,327 @@
+{
+    "basePath": "/api/tb/v3",
+    "paths": {
+        "/api/tenant/assets": {
+            "get": {
+                "summary": "getTenantAssets",
+                "x-auth-type": "Application",
+                "x-scope": "",
+                "produces": [
+                    "*/*"
+                ],
+                "operationId": "getTenantAssetsUsingGET",
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/TextPageData?Asset?"
+                        },
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "type",
+                        "description": "type",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "in": "query",
+                        "name": "textSearch",
+                        "description": "textSearch",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "in": "query",
+                        "name": "idOffset",
+                        "description": "idOffset",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "in": "query",
+                        "name": "textOffset",
+                        "description": "textOffset",
+                        "type": "string",
+                        "required": false
+                    },
+                    {
+                        "in": "query",
+                        "name": "limit",
+                        "description": "limit",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "x-throttling-tier": "Unlimited",
+                "tags": [
+                    "asset-controller"
+                ],
+                "consumes": [
+                    "application/json"
+                ]
+            }
+        },
+        "/api/auth/login": {
+            "post": {
+                "summary": "获取访问令牌",
+                "x-auth-type": "Application",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/AuthToken"
+                        },
+                        "description": "OK"
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "parameters": [
+                    {
+                        "schema": {
+                            "$ref": "#/definitions/AuthPayload"
+                        },
+                        "in": "body",
+                        "name": "Payload",
+                        "description": "Request Body",
+                        "required": true
+                    }
+                ],
+                "x-throttling-tier": "Unlimited",
+                "tags": [
+                    "auth-controller"
+                ],
+                "consumes": [
+                    "application/json"
+                ]
+            }
+        },
+        "/api/auth/token": {
+            "post": {
+                "summary": "使用refreshToken获取新的token",
+                "x-auth-type": "Application",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/AuthToken"
+                        },
+                        "description": "OK 成功获取新的token和refreshToken"
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "Payload",
+                        "description": "Request Body",
+                        "required": true,
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "refreshToken": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "x-throttling-tier": "Unlimited",
+                "tags": [
+                    "auth-controller"
+                ],
+                "consumes": [
+                    "application/json"
+                ]
+            }
+        }
+    },
+    "host": "192.168.200.24:8243",
+    "schemes": [
+        "https",
+        "http"
+    ],
+    "definitions": {
+        "TenantId": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                }
+            }
+        },
+        "TextPageLink": {
+            "type": "object",
+            "properties": {
+                "textOffset": {
+                    "type": "string"
+                },
+                "textSearch": {
+                    "type": "string"
+                },
+                "idOffset": {
+                    "type": "string"
+                },
+                "limit": {
+                    "format": "int32",
+                    "type": "integer"
+                },
+                "textSearchBound": {
+                    "type": "string"
+                }
+            }
+        },
+        "TextPageData?Asset?": {
+            "type": "object",
+            "properties": {
+                "nextPageLink": {
+                    "$ref": "#/definitions/TextPageLink"
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Asset"
+                    }
+                },
+                "hasNext": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "AuthPayload": {
+            "type": "object",
+            "properties": {
+                "password": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "AuthToken": {
+            "type": "object",
+            "properties": {
+                "token": {
+                    "type": "string"
+                },
+                "refreshToken": {
+                    "type": "string"
+                }
+            }
+        },
+        "Asset": {
+            "type": "object",
+            "properties": {
+                "additionalInfo": {
+                    "type": "string"
+                },
+                "customerId": {
+                    "$ref": "#/definitions/CustomerId"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "tenantId": {
+                    "$ref": "#/definitions/TenantId"
+                },
+                "createdTime": {
+                    "format": "int64",
+                    "type": "integer"
+                },
+                "id": {
+                    "$ref": "#/definitions/AssetId"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
+        "CustomerId": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                }
+            }
+        },
+        "AssetId": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "default": {
+            "type": "oauth2",
+            "authorizationUrl": "https://192.168.200.24:8243/authorize",
+            "flow": "implicit",
+            "scopes": {}
+        }
+    },
+    "swagger": "2.0",
+    "info": {
+        "license": {
+            "name": "Apache License Version 2.0",
+            "url": "https://github.com/thingsboard/thingsboard/blob/master/LICENSE"
+        },
+        "contact": {
+            "name": "Thingsboard team",
+            "url": "http://thingsboard.io",
+            "email": "info@thingsboard.io"
+        },
+        "description": "For instructions how to authorize requests please visit <a href='http://thingsboard.io/docs/reference/rest-api/'>REST API documentation page</a>.",
+        "title": "tbapi",
+        "version": "v3"
+    },
+    "tags": [
+        {
+            "name": "auth-controller",
+            "description": "授权管理"
+        },
+        {
+            "name": "asset-controller",
+            "description": "资产管理"
+        }
+    ]
+}
