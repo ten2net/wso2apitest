@@ -21,7 +21,16 @@ public class TBApiDemoRefreshTokenApp {
 		//1、获取缺省ApiClient
 	    ApiClient apiClient=app.authApi.getApiClient();
 	    //2、设置APIKEY
-	    String apikey = "5b0e4f6b-5117-3482-86b5-a6f8f5ec1d4f"; 
+	    //String apikey = "5b0e4f6b-5117-3482-86b5-a6f8f5ec1d4f"; //for my am 2.2.0 for admin
+	    //String apikey = "af361477-0e54-3f78-8094-dbb6c7605038";   //for my am 2.6.0 DefaultApplication for admin
+	    
+	   // String apikey = "a98828ca-475b-351f-9fe3-d6365d14ea28";   //for my am 2.6.0 AssetForTB for admin
+	    String apikey = "e2fa851d-99cd-3158-9626-03776b639490";   //for my am 2.6.0 API-stat-test for wangf
+	    
+	    
+	    
+	    
+	   
 	    String basePath = "https://192.168.200.24:8243/api/tb/v3";
 	    String tbUsername = "tenant@thingsboard.org";
 	    String tbPassword = "tenant";	    
