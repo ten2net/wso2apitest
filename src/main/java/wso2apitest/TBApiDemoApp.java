@@ -43,7 +43,7 @@ public class TBApiDemoApp {
     
 	    //7、资产查询。把上面得到的token设置到请求header的X-Authorization变量中
 	    apiClient.addDefaultHeader("X-Authorization", "Bearer " + auth.getToken());
-	    app.assetApi.setApiClient(apiClient);	    
+	    //app.assetApi.setApiClient(apiClient);	    
 	    TextPageDataAsset result =  app.assetApi.getTenantAssetsUsingGET("3", null, null, null, null);
 	    //7、输出资产查询结果
     	System.out.println( result.getData());
