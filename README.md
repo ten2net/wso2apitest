@@ -5,4 +5,10 @@
 
 # [nodejs获取thingsboard的token](https://gist.github.com/ten2net/3a5a836dd76692a1c380a41c6ebc7006)
 
+# How to Run
+mvn test
+```shell
+```
+
+
 
